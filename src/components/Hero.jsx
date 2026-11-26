@@ -70,7 +70,8 @@ export default function Hero() {
         <h1 className="fade-up text-[2.6rem] font-bold leading-tight tracking-tight sm:text-6xl lg:text-7xl" style={{ '--delay': '100ms' }}>
           {profile.firstName} {profile.lastName}
         </h1>
-        <p className="fade-up mt-4 min-h-[2.2em] text-xl font-semibold text-white/90 sm:text-3xl" style={{ '--delay': '250ms' }} aria-label={h.typed.join(' · ')}>
+        <p className="fade-up mt-4 min-h-[2.2em] text-xl font-semibold text-white/90 sm:text-3xl" style={{ '--delay': '250ms' }}>
+          <span className="sr-only">{h.typed.join(' · ')}</span>
           <span aria-hidden="true">
             {typed}
             <span className="caret" />

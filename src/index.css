@@ -184,3 +184,9 @@ dialog[open] { animation: fade-up 0.35s ease both; }
   .drift-a, .drift-b, .drift-c, .streak, .bounce-soft, .caret { animation: none; }
   .streak { display: none; }
 }
+
+/* Sur petit écran : halos plus légers pour préserver la fluidité */
+@media (max-width: 640px) {
+  .hero-blob { filter: blur(48px); opacity: 0.5; }
+  .streak:nth-of-type(even) { display: none; }
+}

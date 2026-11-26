@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { Download, ExternalLink, LoaderCircle } from 'lucide-react'
 import { usePreferences } from '../context/Preferences.jsx'
 import { profile } from '../content/content.js'
@@ -12,6 +12,25 @@ export default function CvSection() {
   // La version affichée suit la langue du site, mais peut être changée librement
   const [version, setVersion] = useState(lang)
   useEffect(() => setVersion(lang), [lang])
+
+  // La visionneuse (lourde) n'est chargée qu'à l'approche de la section
+  const zoneRef = useRef(null)
+  const [near, setNear] = useState(false)
+  useEffect(() => {
+    const el = zoneRef.current
+    if (!el || !('IntersectionObserver' in window)) return setNear(true)
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setNear(true)
+          io.disconnect()
+        }
+      },
+      { rootMargin: '600px 0px' },
+    )
+    io.observe(el)
+    return () => io.disconnect()
+  }, [])
 
   const file = profile.cv[version]
   const outline =
@@ -69,19 +88,27 @@ export default function CvSection() {
           </div>
         </div>
 
-        <Suspense
-          fallback={
-            <div className="grid h-[320px] place-items-center rounded border border-line text-sm text-muted sm:h-[70vh]">
-              <span className="flex items-center gap-2">
-                <LoaderCircle className="animate-spin text-accent" size={20} />
-                {c.loading}
-              </span>
-            </div>
-          }
-        >
-          <CvViewer key={file} file={file} labels={c} />
-        </Suspense>
+        <div ref={zoneRef}>
+          {near ? (
+            <Suspense fallback={<ViewerPlaceholder text={c.loading} />}>
+              <CvViewer key={file} file={file} labels={c} />
+            </Suspense>
+          ) : (
+            <ViewerPlaceholder text={c.loading} />
+          )}
+        </div>
       </Reveal>
     </Section>
+  )
+}
+
+function ViewerPlaceholder({ text }) {
+  return (
+    <div className="grid h-[320px] place-items-center rounded border border-line text-sm text-muted sm:h-[70vh]">
+      <span className="flex items-center gap-2">
+        <LoaderCircle className="animate-spin text-accent" size={20} />
+        {text}
+      </span>
+    </div>
   )
 }
