@@ -232,7 +232,7 @@ export const content = {
       email: 'E-mail',
       phone: 'Téléphone',
       location: 'Localisation',
-      locationValue: "Avenue Tiemoko, Abidjan, Côte d'Ivoire",
+      locationValue: "Abidjan, Côte d'Ivoire",
       copy: "Copier l'adresse e-mail",
       copied: 'Copié',
       form: {
@@ -459,7 +459,7 @@ export const content = {
       email: 'Email',
       phone: 'Phone',
       location: 'Location',
-      locationValue: "Avenue Tiemoko, Abidjan, Côte d'Ivoire",
+      locationValue: "Abidjan, Côte d'Ivoire",
       copy: 'Copy email address',
       copied: 'Copied',
       form: {
