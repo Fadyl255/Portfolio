@@ -70,7 +70,7 @@ export default function CvViewer({ file, labels }) {
     'grid h-9 w-9 place-items-center rounded-lg text-muted transition-colors hover:bg-soft hover:text-fg disabled:pointer-events-none disabled:opacity-35'
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-line bg-elev">
+    <div className="overflow-hidden rounded border border-line bg-elev">
       {/* Barre d'outils */}
       <div className="flex items-center justify-between gap-2 border-b border-line px-2 py-2 sm:px-3">
         <div className="flex items-center gap-1">

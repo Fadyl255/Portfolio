@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Fadyl Akolawole Eisse — Business Informatique, Cybersécurité & Réseaux</title>
     <meta name="description" content="Portfolio de Fadyl Akolawole Eisse, étudiant en Business Informatique et Computer Science Technology, orienté cybersécurité et réseaux. CV en français et en anglais." />
-    <meta name="theme-color" content="#0a1628" />
+    <meta name="theme-color" content="#000000" />
     <meta property="og:title" content="Fadyl Akolawole Eisse — Portfolio" />
     <meta property="og:description" content="Business Informatique · Cybersécurité & Réseaux — Abidjan, Côte d'Ivoire" />
     <meta property="og:type" content="website" />
@@ -19,15 +19,10 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <script>
-      // Applique le thème avant le rendu pour éviter un flash
-      try {
-        var t = localStorage.getItem('theme');
-        if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches) || (!t && !window.matchMedia('(prefers-color-scheme: light)').matches)) {
-          document.documentElement.classList.add('dark');
-        }
-      } catch (e) { document.documentElement.classList.add('dark'); }
+      // Thème clair par défaut ; sombre si choisi par le visiteur
+      try { if (localStorage.getItem('theme') === 'dark') document.documentElement.classList.add('dark') } catch (e) {}
     </script>
   </head>
   <body>

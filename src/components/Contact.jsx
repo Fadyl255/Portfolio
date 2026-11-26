@@ -3,7 +3,7 @@ import { Check, Copy, LoaderCircle, Mail, MapPin, Phone, Send } from 'lucide-rea
 import { usePreferences } from '../context/Preferences.jsx'
 import { profile } from '../content/content.js'
 import { GithubIcon, LinkedinIcon } from './BrandIcons.jsx'
-import { Reveal, Section } from './ui.jsx'
+import { CardTitle, Reveal, Section } from './ui.jsx'
 
 const EMPTY = { name: '', email: '', subject: '', message: '' }
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -81,76 +81,18 @@ export default function Contact() {
   }
 
   const input =
-    'w-full rounded-xl border border-line bg-bg px-4 py-3 text-sm text-fg placeholder:text-subtle transition-colors focus:border-accent focus:outline-none focus:ring-2 focus:ring-accent/20'
+    'w-full rounded border border-line bg-bg px-4 py-3 text-sm text-fg placeholder:text-subtle transition-colors focus:border-bright focus:outline-none focus:ring-2 focus:ring-bright/20'
 
   return (
-    <Section id="contact" eyebrow={c.eyebrow} title={c.title} intro={c.intro} className="bg-soft/40">
-      <div className="grid gap-6 lg:grid-cols-[1fr_1.3fr]">
-        <Reveal className="space-y-3">
-          <div className="flex items-center gap-4 rounded-2xl border border-line bg-elev p-5">
-            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent-soft text-accent">
-              <Mail size={19} />
-            </span>
-            <div className="min-w-0 flex-1">
-              <p className="text-xs text-subtle">{c.email}</p>
-              <a href={`mailto:${profile.email}`} className="block truncate font-medium hover:text-accent">
-                {profile.email}
-              </a>
-            </div>
-            <button
-              type="button"
-              onClick={copyEmail}
-              className="grid h-9 w-9 shrink-0 place-items-center rounded-lg text-muted transition-colors hover:bg-soft hover:text-fg"
-              aria-label={copied ? c.copied : c.copy}
-              title={copied ? c.copied : c.copy}
-            >
-              {copied ? <Check size={16} className="text-emerald-500" /> : <Copy size={16} />}
-            </button>
-          </div>
+    <Section id="contact" labelledBy="contact-title" className="border-t border-line">
+      <Reveal className="card grid gap-12 p-6 sm:p-10 lg:grid-cols-[1.25fr_1fr]">
+        {/* Formulaire */}
+        <div>
+          <CardTitle as="h2">
+            <span id="contact-title">{c.title}</span>
+          </CardTitle>
+          <p className="mt-4 text-muted">{c.intro}</p>
 
-          <a href={profile.phoneHref} className="flex items-center gap-4 rounded-2xl border border-line bg-elev p-5 transition-colors hover:border-accent/40">
-            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent-soft text-accent">
-              <Phone size={19} />
-            </span>
-            <div>
-              <p className="text-xs text-subtle">{c.phone}</p>
-              <p className="font-medium">{profile.phone}</p>
-            </div>
-          </a>
-
-          <div className="flex items-center gap-4 rounded-2xl border border-line bg-elev p-5">
-            <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-accent-soft text-accent">
-              <MapPin size={19} />
-            </span>
-            <div>
-              <p className="text-xs text-subtle">{c.location}</p>
-              <p className="font-medium">{c.locationValue}</p>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            <a
-              href={profile.linkedin}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 rounded-2xl border border-line bg-elev p-4 text-sm font-medium transition-colors hover:border-accent/40 hover:text-accent"
-            >
-              <LinkedinIcon size={17} />
-              LinkedIn
-            </a>
-            <a
-              href={profile.github}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 rounded-2xl border border-line bg-elev p-4 text-sm font-medium transition-colors hover:border-accent/40 hover:text-accent"
-            >
-              <GithubIcon size={17} />
-              GitHub
-            </a>
-          </div>
-        </Reveal>
-
-        <Reveal delay={100}>
           <form
             name="contact"
             method="POST"
@@ -158,7 +100,7 @@ export default function Contact() {
             netlify-honeypot="bot-field"
             onSubmit={onSubmit}
             noValidate
-            className="rounded-2xl border border-line bg-elev p-6 sm:p-8"
+            className="mt-6"
           >
             <input type="hidden" name="form-name" value="contact" />
             <p className="hidden">
@@ -186,11 +128,11 @@ export default function Contact() {
               </Field>
             </div>
 
-            <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center">
               <button
                 type="submit"
                 disabled={status === 'sending'}
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-semibold text-accent-fg transition-transform hover:-translate-y-0.5 disabled:opacity-60"
+                className="inline-flex items-center justify-center gap-2 rounded bg-fg px-8 py-3 text-sm font-semibold uppercase tracking-wide text-bg transition-opacity hover:opacity-85 disabled:opacity-60"
               >
                 {status === 'sending' ? <LoaderCircle size={16} className="animate-spin" /> : <Send size={16} />}
                 {status === 'sending' ? f.sending : f.send}
@@ -202,8 +144,73 @@ export default function Contact() {
               </p>
             </div>
           </form>
-        </Reveal>
-      </div>
+        </div>
+
+        {/* Coordonnées et réseaux */}
+        <div>
+          <CardTitle>{c.details}</CardTitle>
+          <ul className="mt-6 space-y-4">
+            <li className="flex items-start gap-3">
+              <Mail size={18} className="mt-0.5 shrink-0 text-bright" />
+              <div className="min-w-0">
+                <p className="text-xs font-semibold uppercase tracking-wide text-subtle">{c.email}</p>
+                <div className="flex items-center gap-1">
+                  <a href={`mailto:${profile.email}`} className="truncate font-medium hover:text-accent">
+                    {profile.email}
+                  </a>
+                  <button
+                    type="button"
+                    onClick={copyEmail}
+                    className="grid h-8 w-8 shrink-0 place-items-center rounded text-muted transition-colors hover:bg-soft hover:text-fg"
+                    aria-label={copied ? c.copied : c.copy}
+                    title={copied ? c.copied : c.copy}
+                  >
+                    {copied ? <Check size={15} className="text-emerald-500" /> : <Copy size={15} />}
+                  </button>
+                </div>
+              </div>
+            </li>
+            <li className="flex items-start gap-3">
+              <Phone size={18} className="mt-0.5 shrink-0 text-bright" />
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-subtle">{c.phone}</p>
+                <a href={profile.phoneHref} className="font-medium hover:text-accent">
+                  {profile.phone}
+                </a>
+              </div>
+            </li>
+            <li className="flex items-start gap-3">
+              <MapPin size={18} className="mt-0.5 shrink-0 text-bright" />
+              <div>
+                <p className="text-xs font-semibold uppercase tracking-wide text-subtle">{c.location}</p>
+                <p className="font-medium">{c.locationValue}</p>
+              </div>
+            </li>
+          </ul>
+
+          <CardTitle className="mt-10">{c.social}</CardTitle>
+          <div className="mt-6 space-y-3">
+            <a
+              href={profile.linkedin}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="gradient-btn flex items-center justify-center gap-2 rounded px-5 py-3 text-sm font-semibold uppercase tracking-wide text-white"
+            >
+              LinkedIn
+              <LinkedinIcon size={16} />
+            </a>
+            <a
+              href={profile.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="gradient-btn flex items-center justify-center gap-2 rounded px-5 py-3 text-sm font-semibold uppercase tracking-wide text-white"
+            >
+              GitHub
+              <GithubIcon size={16} />
+            </a>
+          </div>
+        </div>
+      </Reveal>
     </Section>
   )
 }

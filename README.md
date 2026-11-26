@@ -28,6 +28,7 @@ portfolio/
 ├── vercel.json                # Configuration Vercel
 ├── public/
 │   ├── favicon.svg
+│   ├── og-image.jpg       # Image d'aperçu lors du partage du lien
 │   └── cv/
 │       ├── CV-FR.pdf          # ← CV en français
 │       └── CV-EN.pdf          # ← CV en anglais
@@ -39,18 +40,16 @@ portfolio/
     ├── content/content.js     # TOUT le texte du site, en FR et en EN
     ├── context/Preferences.jsx# Langue + thème (mémorisés dans le navigateur)
     └── components/
-        ├── Navbar.jsx         # Menu, bascule FR/EN, thème, menu mobile
-        ├── Hero.jsx           # Accueil
-        ├── About.jsx          # À propos
-        ├── Skills.jsx         # Compétences
-        ├── Experience.jsx     # Expériences (timeline)
-        ├── Projects.jsx       # Projets
-        ├── Education.jsx      # Formation & certifications
+        ├── Navbar.jsx         # Barre noire, bascule FR/EN, thème, menu mobile
+        ├── Hero.jsx           # Accueil plein écran animé (effet machine à écrire)
+        ├── Profile.jsx        # Profil + frises Expériences / Formations
+        ├── Skills.jsx         # Cartes de compétences
+        ├── Projects.jsx       # Cartes de projets + fiche détaillée
         ├── CvSection.jsx      # Sélecteur FR/EN, téléchargements, ouverture
         ├── CvViewer.jsx       # Visionneuse PDF (chargée à la demande)
-        ├── Contact.jsx        # Coordonnées + formulaire
+        ├── Contact.jsx        # Formulaire, coordonnées, réseaux
         ├── BrandIcons.jsx     # Logos LinkedIn / GitHub
-        └── ui.jsx             # Section, Reveal (animation au défilement), Card, Chip
+        └── ui.jsx             # Section, titres, Reveal (animation au défilement)
 ```
 
 ## Mettre à jour le contenu
@@ -59,7 +58,7 @@ portfolio/
 - **CV** : remplacez `public/cv/CV-FR.pdf` et `public/cv/CV-EN.pdf` en gardant ces noms exacts.
 - **Photo** : remplacez `src/assets/photo.jpg` (format carré conseillé).
 - **Emplacements à compléter** (repérés par « À COMPLÉTER » dans `content.js`) :
-  - `education.certifications` : vide, donc la rubrique est masquée. Ajoutez vos certifications dès que vous les obtenez.
+  - `certifications` : vide, donc la rubrique est masquée. Ajoutez vos certifications dès que vous les obtenez.
   - `projects.items[].link` : lien GitHub ou démo d'un projet. Le lien s'affiche automatiquement s'il est renseigné.
 
 ## Aperçu lors du partage du lien
